@@ -58,3 +58,23 @@ Here's a breakdown of the main folders:
 - `serviceWorker.js` and `reportWebVitals.js`: These files are related to service workers and web vitals reporting, respectively, and are optional based on your project requirements.
 
 Remember that this is just a suggested folder structure, and you can modify or expand it based on your specific needs. It's essential to keep your folder structure organized and maintain consistency throughout your project to improve code readability and maintainability.
+
+# Arrays of HTML get broken down
+
+Here the array of divs get broken down and outputted as multiple divs. The square brackets are opened up
+
+```
+<div className="home">
+  <h2>Home Page</h2>
+  {/* An event object is always passed on events */}
+  <p>{name}</p>
+  <p>{age}</p>
+  <button onClick={(event)=>handleClick('wassup', event)}>Click Me</button>
+
+  {blogs.map((blog) => (
+    <div className="blog-preview" key={blog.id}>
+      <h2>{ blog.title }</h2>
+      <p>Written by { blog.author }</p>
+    </div>
+</div>
+```

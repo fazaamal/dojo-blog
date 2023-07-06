@@ -1,6 +1,5 @@
-import './App.css'
-import Navbar from './Navbar';
-import Home from './Home';
+import {Navbar} from './components';
+import {Home} from './pages';
 
 // App is second highest compenent under root 
 function App() {
