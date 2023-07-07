@@ -4,6 +4,8 @@ import { Blog } from "../types";
 
 const Home = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [isPending, setIsPending] = useState(true);
+  const [error, setError] = useState(null);
 
   const [name, setName] = useState('Mario')
   const [age, setAge] = useState(25)
@@ -19,11 +21,19 @@ const Home = () => {
   useEffect(()=>{
     console.log('use effect ran');
     fetch('http://localhost:8000/blogs').then(res=>{
+      if(!res.ok) throw Error('Could not fetch data');
       return res.json()
     }).then(data=>{
       console.log(data);
       setBlogs(data)
+      setIsPending(false)
+      setError(null)
+    }).catch(err=>{
+      console.log(err.message);
+      setError(err.message)
+      setIsPending(false)
     })
+
   }, [])
 
   return ( 
@@ -35,13 +45,15 @@ const Home = () => {
       <button onClick={(event)=>handleClick('wassup', event)}>Click Me</button>
 
       {
-        blogs && <BlogList blogs={blogs} title="All blogs" setBlogs={setBlogs}/>
+        blogs.length>0 && <BlogList blogs={blogs} title="All blogs" setBlogs={setBlogs}/>
         // (
         //   <>
         //     {/* <BlogList blogs={blogs.filter(blog=>blog.author === 'mario')} title="Mario's blogs" setBlogs={setBlogs}/>     */}
         //   </>
         // )
       }
+      { isPending && <div>Loading...</div>}
+      { error && <div className="error"><strong>{error}</strong></div>}
 
     </div>
    );
