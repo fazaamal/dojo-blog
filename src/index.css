@@ -44,3 +44,6 @@
 .blog-preview h2 {
   color: #f1356d;
 }
+.blog-preview a {
+  text-decoration: none;
+}

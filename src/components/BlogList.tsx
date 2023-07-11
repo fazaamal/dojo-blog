@@ -1,4 +1,5 @@
 import { Blog } from "../types";
+import { Link } from "react-router-dom";
 
 const BlogList = ({blogs, title, setBlogs} : {blogs: Array<Blog>, title: string, setBlogs?:(blogs: Array<Blog>)=> void }) => {
   // const blogs= props.blogs;
@@ -17,11 +18,14 @@ const BlogList = ({blogs, title, setBlogs} : {blogs: Array<Blog>, title: string,
       <h2>{title}</h2>
       {blogs.map((blog:Blog) => (
         <div className="blog-preview" key={blog.id}>
-          <h2>{ blog.title }</h2>
-          <p>Written by { blog.author }</p>
-          <button style={{
-            display: setBlogs? 'block' : 'none',
-          }} onClick={()=>handleDelete(blog.id)}>Delete Blog</button>
+          <Link to={`blog/${blog.id}`}>
+            <h2>{ blog.title }</h2>
+            <p>Written by { blog.author }</p>
+            <button style={{
+              display: setBlogs? 'block' : 'none',
+            }} onClick={()=>handleDelete(blog.id)}>Delete Blog</button>
+
+          </Link>
         </div>
       ))}
     </div>

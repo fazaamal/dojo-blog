@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { BlogList } from "../components";
-import { Blog } from "../types";
+import { useFetch } from "../utils";
 
 const Home = () => {
-  const [blogs, setBlogs] = useState<Blog[]>([]);
-  const [isPending, setIsPending] = useState(true);
-  const [error, setError] = useState(null);
+  console.log('hey');
+  
+  const {data: blogs, isPending, error, setData: setBlogs} = useFetch('http://localhost:8000/blogs')
 
   const [name, setName] = useState('Mario')
   const [age, setAge] = useState(25)
@@ -20,19 +20,7 @@ const Home = () => {
   // When empty array passed, only runs on first render
   useEffect(()=>{
     console.log('use effect ran');
-    fetch('http://localhost:8000/blogs').then(res=>{
-      if(!res.ok) throw Error('Could not fetch data');
-      return res.json()
-    }).then(data=>{
-      console.log(data);
-      setBlogs(data)
-      setIsPending(false)
-      setError(null)
-    }).catch(err=>{
-      console.log(err.message);
-      setError(err.message)
-      setIsPending(false)
-    })
+    
 
   }, [])
 
@@ -45,7 +33,7 @@ const Home = () => {
       <button onClick={(event)=>handleClick('wassup', event)}>Click Me</button>
 
       {
-        blogs.length>0 && <BlogList blogs={blogs} title="All blogs" setBlogs={setBlogs}/>
+        blogs && blogs.length>0 && <BlogList blogs={blogs} title="All blogs" setBlogs={setBlogs}/>
         // (
         //   <>
         //     {/* <BlogList blogs={blogs.filter(blog=>blog.author === 'mario')} title="Mario's blogs" setBlogs={setBlogs}/>     */}
